@@ -1,0 +1,76 @@
+Database changed
+mysql> SELECT * from animals where name like '%mon';
++----+---------+---------------+-----------------+----------+-----------+
+| id | name    | date_of_birth | escape_attempts | neutered | weight_kg |
++----+---------+---------------+-----------------+----------+-----------+
+|  1 | Agumon  | 2020-02-03    |               0 |        1 |     10.23 |
+|  2 | Gabumon | 2018-11-15    |               2 |        1 |      8.00 |
+|  4 | Devimon | 2017-05-12    |               5 |        1 |     11.00 |
++----+---------+---------------+-----------------+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name from animals where date_of_birth
+    -> between '2016-01-01' and '2019-12-31';
++---------+
+| name    |
++---------+
+| Gabumon |
+| Devimon |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT name from animals where neutered = true and escape_attempts < 3;
++---------+
+| name    |
++---------+
+| Agumon  |
+| Gabumon |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT date_of_birth from animals where name in ("Agumon","Pikachu");
++---------------+
+| date_of_birth |
++---------------+
+| 2020-02-03    |
+| 2021-01-07    |
++---------------+
+2 rows in set (0.00 sec)
+
+mysql> select name,escape_attempts from animals where weight_kg > 10.5;
++---------+-----------------+
+| name    | escape_attempts |
++---------+-----------------+
+| Pikachu |               1 |
+| Devimon |               5 |
++---------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from animals where neutered = true;
++----+---------+---------------+-----------------+----------+-----------+
+| id | name    | date_of_birth | escape_attempts | neutered | weight_kg |
++----+---------+---------------+-----------------+----------+-----------+
+|  1 | Agumon  | 2020-02-03    |               0 |        1 |     10.23 |
+|  2 | Gabumon | 2018-11-15    |               2 |        1 |      8.00 |
+|  4 | Devimon | 2017-05-12    |               5 |        1 |     11.00 |
++----+---------+---------------+-----------------+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from animals where name <> "Gabumon";
++----+---------+---------------+-----------------+----------+-----------+
+| id | name    | date_of_birth | escape_attempts | neutered | weight_kg |
++----+---------+---------------+-----------------+----------+-----------+
+|  1 | Agumon  | 2020-02-03    |               0 |        1 |     10.23 |
+|  3 | Pikachu | 2021-01-07    |               1 |        0 |     15.04 |
+|  4 | Devimon | 2017-05-12    |               5 |        1 |     11.00 |
++----+---------+---------------+-----------------+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from animals where weight_kg >= 10.4 and weight_kg <= 17.3;
++----+---------+---------------+-----------------+----------+-----------+
+| id | name    | date_of_birth | escape_attempts | neutered | weight_kg |
++----+---------+---------------+-----------------+----------+-----------+
+|  3 | Pikachu | 2021-01-07    |               1 |        0 |     15.04 |
+|  4 | Devimon | 2017-05-12    |               5 |        1 |     11.00 |
++----+---------+---------------+-----------------+----------+-----------+
+2 rows in set (0.00 sec)
