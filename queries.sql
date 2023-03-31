@@ -42,7 +42,11 @@ select a.name as Animals,o.full_name as Owner from animals a join owners o on (a
 select a.name as Animals,s.name as Species from animals a join species s on (a.species_id = s.id) where s.name="Pokemon";
 select o.full_name as Owner, a.name Animals from owners o left outer join animals a on (o.id=a.owner_id);
 select s.name, count(a.species_id) from animals a join species s on (s.id = a.species_id) group by (a.species_id);
+select o.full_name as Owner ,a.name as Animal, s.name as Species from animals a join owners o on (o.id = a.owner_id) join species s on (s.id = a.species_id) where s.name = "Digimon" and o.full_name="Jennifer Orwell";
 select a.name as Animals, o.full_name as Owner, a.escape_attempts from animals a join owners o on (o.id = a.owner_id) where a.escape_attempts = 0
     -> and o.full_name ="Dean Winchester";
-select o.full_name as Owner ,a.name as Animal, s.name as Species from animals a join owners o on (o.id = a.owner_id) join species s on (s.id = a.species_id) where s.name = "Digimon";
+select o.full_name as Owner, max(a.owner_id) as Most_Animals from animals a join owners o on (o.id=a.owner_id) group by a.owner_id order by (a.owner_id) desc limit 1;
+
+
+
 
