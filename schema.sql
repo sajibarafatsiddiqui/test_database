@@ -23,3 +23,9 @@ CREATE TABLE species(
 
  ALTER TABLE animals CHANGE COLUMN `id` `id` INT
     ->  NOT NULL AUTO_INCREMENT;
+    
+ alter table animals drop column species;
+
+ Alter table animals add species_id int, add constraint fk_speciesId foreign key(species_id) references species(id);
+ Alter table animals add owner_id int, add constraint fk_ownerId foreign key(owner_id) references owners(id);
+
