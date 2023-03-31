@@ -47,6 +47,51 @@ select a.name as Animals, o.full_name as Owner, a.escape_attempts from animals a
     -> and o.full_name ="Dean Winchester";
 select o.full_name as Owner, max(a.owner_id) as Most_Animals from animals a join owners o on (o.id=a.owner_id) group by a.owner_id order by (a.owner_id) desc limit 1;
 
+SELECT vi.visit_date as visit_date, v.name as vet_name, a.name as animal FROM visits vi
+JOIN animals a ON a.id = vi.animals_id
+JOIN vets v ON v.id = vi.vets_id
+WHERE v.name = 'William Tatcher'
+ORDER BY vi.visit_date desc limit 1;
+
+select v.name as vet_name, count(distinct vi.animals_id) as distict_animals from vets v join visits vi on
+(v.id = vi.vets_id) where v.name = 'Stephanie Mendez';
+
+ SELECT v.name as vet_name,sp.name  as specialities from specializations s right outer join species as sp on (s.species_id=sp.id) right outer join vets v on(s.vet_id=v.id);
+
+ SELECT a.name as animal,vi.visit_date as visit_date from visits vi
+JOIN vets v ON v.id = vi.vets_id
+JOIN animals a ON a.id = vi.animals_id
+WHERE v.name = 'Stephanie Mendez'
+AND EXTRACT(YEAR FROM vi.visit_date) = 2020
+AND EXTRACT(MONTH FROM vi.visit_date) BETWEEN 4 AND 8;
+
+ select a.name , count(v.animals_id) as cnt from visits v join animals a on (v.animals_id =  a.id) group by a.name order by cnt desc limit 1;
+
+ select a.name,vi.visit_date,v.name from visits vi join animals a on (a.id = vi.animals_id) join vets v on (v.id = vi.vets_id) where v.name="Maisy Smith" order by visit_date limit 1;
 
 
+
+SELECT * FROM visits
+INNER JOIN vets ON vets.id = visits.vets_id
+INNER JOIN animals ON animals.id = visits.animals_id
+WHERE visit_date = (SELECT MAX(visit_date) FROM visits);
+
+SELECT COUNT(*) FROM 
+(
+  SELECT species_seen.vet_name, species_seen.specie_seen FROM 
+  (
+    SELECT vets.name as vet_name, species.name as specie_seen FROM visits 
+    INNER JOIN vets ON vets.id = visits.vets_id 
+    INNER JOIN animals ON animals.id = visits.animals_id 
+    INNER JOIN species ON animals.species_id = species.id
+  ) AS species_seen 
+  WHERE specie_seen NOT IN ( 
+    SELECT species.name as specialties FROM specializations
+    INNER JOIN vets ON vets.id = specializations.vet_id 
+    INNER JOIN species ON species.id = specializations.species_id 
+    WHERE vets.name = species_seen.vet_name
+  )
+) AS FOO;
+
+SELECT s.name, COUNT(*) AS num_visits FROM visits v JOIN animals a ON v.animals_id = a.id JOIN species s ON a.species_id = s.id JOIN vets vet ON vet.id = v.vets_id WHERE vet.name = 'Maisy Smith' GROUP BY s.name ORDER BY num_visits DESC LIMIT 1;
 
